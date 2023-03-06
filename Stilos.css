@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@1,300;1,400;1,700&display=swap');
+/* @media (max-width: 769px){
+
+} */
+
+body {
+    /*background: palegreen; */
+    background-color: hsl(0, 0%, 0%);
+    opacity: 1;
+    background-image: radial-gradient(circle at center center, #666, #dcf3ff), repeating-radial-gradient(circle at center center, #666, #666, 28px, transparent 56px, transparent 28px);
+    background-blend-mode: multiply;
+    font-family: 'Comic Neue', cursive;
+    background: url(https://fondosmil.com/fondo/3879.jpg);
+    background-size: 100%;
+    /*justify-content: center;*/
+
+}
+
+.pantalla {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.izquierda {
+    width: 30%;
+    min-width: 300px;
+    margin: 0 auto;
+}
+
+.derecha {
+    width: 70%;
+}
+
+li {
+    color: rgb(255, 255, 255);
+
+}
+
+.li1 {
+    color: rgb(255, 255, 255);
+    display: block;
+}
+
+.cate{
+    color: rgb(255, 255, 255);
+    display: block;
+}
+
+h2,
+h3 {
+    color: rgb(0, 255, 200);
+    margin-left: 2%;
+    display: inline-block;
+  
+
+}
+
+h1 {
+    color: rgb(243, 0, 252);
+}
+
+
+
+h1::after,
+h1::before {
+    content: "";
+    position: absolute;
+    width: 172px;
+    height: 3px;
+    background-color: rgb(243, 0, 252);
+    top: 2.1em;
+
+}
+
+h1::before {
+    left: 385px;
+}
+
+h1::after {
+    right: 385px;
+}
+
+.cen {
+    margin-top: -200px;
+    margin-left: 40%;
+}
+
+p {
+    color: white;
+    text-align: center;
+    margin-left: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    /* display: none;  */
+}
+
+.section {
+    border: solid 3px rgb(115, 64, 255);
+    text-align: center;
+    max-width: 250px;
+    margin: 15px auto;
+  
+
+}
+
+.lateral {
+    border: solid 3px rgb(115, 64, 255);
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+img {
+    width: 100%;
+    color: white;
+}
+
+.mar {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 565px;
+    margin-right: 550px;
+}
+
+.bt-neon {
+    position: relative;
+    display: inline-block;
+    padding: 2px 6px;
+    color: rgb(255, 255, 255);
+    letter-spacing: 2px;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 1.5s;
+    border-radius: 10px;
+}
+
+.bt-neon:hover {
+    background: rgb(1, 255, 137);
+    box-shadow: 0 0 10px rgb(1, 255, 137), 0 0 40px rgb(1, 255, 137), 0 0 80px rgb(1, 255, 137);
+
+}
+
+.bt-neon span {
+    position: absolute;
+    display: block;
+}
+
+#arriba {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgb(1, 255, 137));
+}
+
+.bt-neon:hover #arriba {
+    left: 100%;
+    transition: 1s;
+}
+
+#abajo {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgb(1, 255, 137));
+}
+
+.bt-neon:hover #abajo {
+    right: 100%;
+    transition: 1s;
+}
+
+article {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+aside {
+    border: solid 3px rgb(115, 64, 255);
+    margin-top: 15px;
+}
+
+.imag {
+    width: 250px;
+    height: 250px;
+}
+
+footer {
+    background: black;
+    height: auto;
+    font-family: "Open Sans";
+    padding-top: 5px;
+    color: white;
+    text-align: center;
+}
+
+.footerC {
+    /*display: inline-flex;*/
+    align-items: center;
+    /*  justify-content: center;*/
+    text-align: center;
+}
+
+.footerC h3 {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    line-height: 2rem;
+
+}
+
+.footerC p {
+    max-width: 500px;
+    margin: 5px auto;
+    line-height: 28px;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.item {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0.5rem 0 3rem 0;
+
+}
+
+.item li {
+    margin: 0 8px;
+}
+
+.item a {
+    text-decoration: none;
+    color: white;
+}
+
+.item a i {
+    font-size: 1.1rem;
+    transition: color .4s ease;
+}
+
+.item a:hover i {
+    color: turquoise;
+}
+
+.footerB {
+    background: rgb(44, 43, 43);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footerB p {
+    font-size: 15px;
+    word-spacing: 5px;
+    text-transform: capitalize;
+
+}
+
+.footerB span {
+    text-transform: uppercase;
+    opacity: .4;
+    font-weight: 200;
+}
+
+
+
+.bt-neon1 {
+    position: relative;
+    display: inline-block;
+    padding: 5px 20px;
+    color: rgb(255, 255, 255);
+    letter-spacing: 2px;
+    font-size: 28px;
+    overflow: hidden;
+    transition: 1.5s;
+    border-radius: 10px;
+}
+
+.bt-neon1:hover {
+    background: rgb(1, 255, 137);
+    box-shadow: 0 0 10px rgb(1, 255, 137), 0 0 40px rgb(1, 255, 137), 0 0 80px rgb(1, 255, 137);
+
+}
+
+.bt-neon1 span {
+    position: absolute;
+    display: block;
+}
+
+#arriba {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgb(1, 255, 137));
+}
+
+.bt-neon1:hover #arriba {
+    left: 100%;
+    transition: 1s;
+}
+
+#abajo {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgb(1, 255, 137));
+}
+
+.bt-neon1:hover #abajo {
+    right: 100%;
+    transition: 1s;
+}
+
+.rg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

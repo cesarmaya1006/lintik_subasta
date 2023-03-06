@@ -1,0 +1,24 @@
+.btn-accion-tabla {
+    cursor: pointer;
+    border: none;
+    background: 0;
+    padding: 0 0 0 5px;
+    font-size: 14px !important;
+    line-height: 1.5;
+}
+
+.formulario{
+    -webkit-box-shadow: 6px 6px 2px 0px rgba(0, 0, 0, 0.75);
+        -moz-box-shadow: 6px 6px 2px 0px rgba(0, 0, 0, 0.75);
+        box-shadow: 6px 6px 2px 0px rgba(0, 0, 0, 0.75);
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+
+        background-color: rgba(255, 255, 255, 0.75);
+        border-radius: 5px;
+}
+.btn{
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
