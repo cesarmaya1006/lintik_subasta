@@ -41,8 +41,8 @@ $subastas = $result->fetch_all(MYSQLI_ASSOC);
     <script src="./assets/librerias/e00ad09966.js" crossorigin="anonymous"></script>
     <title>Linktic</title>
   </head>
-  <body>
-    <div class="container-fluid" style="background-color:rgba(29,214,0,0.8); min-height: 100vh;">
+  <body style="min-height: 100vh;background-image: url('./imagenes/subasta.jpg');background-position: center;background-size: cover;background-repeat:no-repeat ;">
+    <div class="container-fluid"  style="width: 100vw; height: 100vh;background-color: rgba(0, 156, 255, 0.3);position: fixed;">
         <div class="row">
             <div class="col-12">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgba(0, 0, 0, 0.76);">

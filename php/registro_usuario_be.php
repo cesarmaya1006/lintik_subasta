@@ -18,7 +18,8 @@ $dominios = [
     'vendeporinternet.co',
     'Wimbu.co',
     'Yaktil.co',
-    'Linktic.com',
+    'linktic.com',
+
 ];
 //Creacion de variables
 $nombre_completo = $_POST['Nombre_completo'];
