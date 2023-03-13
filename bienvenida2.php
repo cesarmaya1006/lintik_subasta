@@ -221,7 +221,7 @@ $equipos = $result->fetch_all(MYSQLI_ASSOC);
                                                 echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Ram : </strong></div><div class="col-8"><p>'.$equipo['ram'].'</p></div></div>');
                                                 echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Disco duro : </strong></div><div class="col-8"><p>'.$equipo['disco'].'</p></div></div>');
                                                 echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>NOTA : </strong></div><div class="col-8" style="font-size:0.9em;"><p>'.$equipo['nota'].'</p></div></div>');
-                                                echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Costo : </strong></div><div class="col-8"><p>$ '.number_format($equipo['costo'],2,'.',',').'</p></div></div>');
+                                                echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Contribución : </strong></div><div class="col-8"><p>$ '.number_format($equipo['costo'],2,'.',',').'</p></div></div>');
                                                 echo('<div class="row mt-5"><div class="col-12 d-grid gap-2 col-md-6 mx-auto">');
                                                 echo('<form action="./compra.php" method ="POST">');
                                                 echo('<input type="hidden" name="id_productos" value="'.$equipo['id_productos'].'">  ');
