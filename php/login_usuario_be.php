@@ -20,6 +20,7 @@ foreach ($usuarios as $usuario) {
 if(mysqli_num_rows($verificar_login) > 0){
     $_SESSION = array();
     $_SESSION['pefil'] = $perfil;
+    $_SESSION['id'] = $id_usuario;
     if ($_SESSION['pefil']=='admin') {
         header("location: ../asignacion.php");
     } else {

@@ -2,6 +2,25 @@
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
+session_start();
+if ($_SESSION['pefil']!='admin') {
+    echo'
+    <script>
+    alert("usuario sin acceso ");
+    window.location = "index.php";
+    </script>
+    ';
+    exit;
+}
+
+$url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+$url = substr($url,0,24);
+$_SESSION['url'] = $url;
+if ($url =='localhost/login-register') {
+    $urlRetorno ='./';
+}else{
+    $urlRetorno ='https://dona.linktic.com/';
+}
     include('./php/conexion_be.php');
     //===========================================================
     
@@ -55,7 +74,7 @@ ini_set('display_errors', '1');
                     '". $archivo ."',
                     1)";
             $result = mysqli_query($conexion,$query);
-            header("location: ../login-register/equipos.php?registrado=1&editado=0");
+            header("location: ".$urlRetorno."equipos.php?registrado=1&editado=0");
         }elseif ($accion == 'editar') {
             //===========================================================
             //Categorias
@@ -92,7 +111,7 @@ ini_set('display_errors', '1');
             }
             $query.="WHERE `id_productos` = '" . $_POST['id_productos']."'";
             $result = mysqli_query($conexion,$query);
-            header("location: ../login-register/equipos.php?registrado=0&editado=1");
+            header("location: ".$urlRetorno."equipos.php?registrado=0&editado=1");
         }elseif ($accion == 'agregar') {
             //===========================================================
              //===========================================================
@@ -115,7 +134,7 @@ ini_set('display_errors', '1');
                      '". $_POST['id_productos'] ."',
                      '". $archivo ."')";
              $result = mysqli_query($conexion,$query);
-             header("location: ../login-register/producto_editar.php?id_productos=".$_POST['id_productos']);
+             header("location: ".$urlRetorno."producto_editar.php?id_productos=".$_POST['id_productos']);
          }elseif ($accion == 'eliminar_foto') {
             //===========================================================
             $id_foto = $_POST['id_foto'];
@@ -132,7 +151,7 @@ ini_set('display_errors', '1');
             //================================================================
             $query="DELETE FROM `fotos` WHERE `id_foto` = '". $id_foto."'";
             $result = mysqli_query($conexion,$query);
-             header("location: ../login-register/producto_editar.php?id_productos=".$_POST['id_productos']);
+             header("location: ".$urlRetorno."producto_editar.php?id_productos=".$_POST['id_productos']);
          }
     }elseif ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
@@ -141,20 +160,33 @@ ini_set('display_errors', '1');
             if ($metodo == 'eliminar') {
                 $id_productos = $_GET['id_productos'];
                 //===============================================================
-                $query ="SELECT `url` FROM `fotos`WHERE `id_productos` = '". $id_productos."'";
+                $query ="SELECT `url` FROM `fotos` WHERE `id_productos` = '". $id_productos."'";
                 $result = mysqli_query($conexion,$query);
                 $fotos = $result->fetch_all(MYSQLI_ASSOC);
-                foreach ($fotos as $foto) {
-                    $url = $foto['url'];
-                    $url_borrar = 'imagenes/'. $url;
-                    $url_borrar = rtrim($url_borrar);
-                    unlink($url_borrar);
+                if (count($fotos)>0) {
+                    foreach ($fotos as $foto) {
+                        $url = $foto['url'];
+                        $url_borrar = 'imagenes/'. $url;
+                        $url_borrar = rtrim($url_borrar);
+                        unlink($url_borrar);
+                        $query="DELETE FROM `fotos` WHERE `id_productos` = '". $id_productos."'";
+                        $result = mysqli_query($conexion,$query);
+                    }
                 }
                 //================================================================
-                $query="DELETE FROM `fotos` WHERE `id_productos` = '". $id_productos."'";
+                $query="DELETE FROM `productos` WHERE `id_productos` = '". $id_productos."'";
                 $result = mysqli_query($conexion,$query);
-                //header("location: ../login-register/equipos.php?registrado=0&editado=1");
+                //header("location: ../equipos.php?registrado=0&editado=1");
                 $datos[]='eliminado';
+                header('Content-type: text/json');
+                echo json_encode($datos, JSON_PRETTY_PRINT);
+            }elseif($metodo == 'cargarfotos') {
+                $id_productos = $_GET['id_productos'];
+                //===============================================================
+                $query ="SELECT `url` FROM `fotos` WHERE `id_productos` = '". $id_productos."'";
+                $result = mysqli_query($conexion,$query);
+                $fotos = $result->fetch_all(MYSQLI_ASSOC);
+                $datos[]='sipi';
                 header('Content-type: text/json');
                 echo json_encode($datos, JSON_PRETTY_PRINT);
             }

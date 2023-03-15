@@ -41,11 +41,11 @@ $subastas = $result->fetch_all(MYSQLI_ASSOC);
     <script src="./assets/librerias/e00ad09966.js" crossorigin="anonymous"></script>
     <title>Linktic</title>
   </head>
-  <body style="min-height: 100vh;background-image: url('./imagenes/subasta.jpg');background-position: center;background-size: cover;background-repeat:no-repeat ;">
-    <div class="container-fluid"  style="width: 100vw; height: 100vh;background-color: rgba(0, 156, 255, 0.3);position: fixed;">
+  <body style="min-height: 100vh;">
+    <div class="container-fluid"  style="width: 100vw; height: 100vh;background-color: rgba(255, 255, 255, 1);">
         <div class="row">
             <div class="col-12">
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgba(0, 0, 0, 0.76);">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgba(0, 0, 0, 0.75);">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="./asignacion.php">Inicio</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,61 +63,75 @@ $subastas = $result->fetch_all(MYSQLI_ASSOC);
                                 <a class="nav-link" href="./php/unlogin.php">Salir</a>
                                 </li>
                             </ul>
-                            <img class="img-fluid float-end" src="./imagenes/logonegro.jpg" alt="">
+                            <img class="img-fluid float-end" src="./imagenes/logonegro.png" alt="" style="max-height: 150px;">
                         </div>
                     </div>
                 </nav>        
             </div>
         </div>
-        <div class="row mt-3"style="border-radius: 10px;border: 2px solid  black; background-color: rgba(255,255,255,0.7);margin-left: 7px;margin-right: 7px;-webkit-box-shadow: 6px 6px 2px 0px rgba(0, 0, 0, 0.75);
-        -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 30px;
-        border-radius: 5px;
-        background-color: rgba(255, 255, 255, 0.75);
-        border-radius: 5px;">
-            <div class="col-12">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10 text-center">
-                        <h1>Asignación de equipos</h1>
-                    </div>
-                    <hr>
-                    <div class="col-10 table-responsive">
-                        <table class="table table-striped table-hover table-bordered table-sm display">
-                            <thead>
-                                <tr>
-                                <th scope="col">Usuario</th>
-                                <th scope="col">Correo</th>
-                                <th scope="col">Categoria</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Modelo</th>
-                                <th scope="col">Serie</th>
-                                <th scope="col">Aporte</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    foreach ($subastas as $subasta) {
-                                        echo('<tr>');
-                                        echo('<td>'.$subasta['nombre_completo'].'</td>');
-                                        echo('<td>'.$subasta['correo'].'</td>');
-                                        echo('<td>'.$subasta['categoria'].'</td>');
-                                        echo('<td>'.$subasta['marca'].'</td>');
-                                        echo('<td>'.$subasta['modelo_equipo'].'</td>');
-                                        echo('<td>'.$subasta['serie'].'</td>');
-                                        echo('<td class="text-end"> $'. $subasta['costo'].'</td>');
-                                        echo('</tr>');
-                                    }
-                                ?>
-                            </tbody>
-                        </table>
+        <div class="row d-flex justify-content-center" 
+                    style="background-image: url('./imagenes/logofull.png');
+                           background-attachment: fixed;
+                           background-position: center;
+                           background-repeat: no-repeat;
+                           background-size: cover;
+                           background-size: 600px;">
+            <div class="col-12" style="background-color: rgba(255,255,255,0.5); min-height:75vh">
+                <div class="row mt-3"
+                style="border-radius: 10px;
+                        border: 2px solid  black; 
+                        margin-left: 7px;
+                        margin-right: 7px;
+                        -webkit-box-shadow: 6px 6px 2px 0px rgba(0, 0, 0, 0.75);
+                        -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+                        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+                        margin-left: 20px;
+                        margin-right: 20px;
+                        margin-bottom: 30px;
+                        border-radius: 5px;
+                        background-color: rgba(255, 255, 255, 0.25);
+                        border-radius: 5px;">
+                    <div class="col-12">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-10 text-center">
+                                <h1>Asignación de equipos</h1>
+                            </div>
+                            <hr>
+                            <div class="col-10 table-responsive">
+                                <table class="table table-striped table-hover table-bordered table-sm display">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Usuario</th>
+                                        <th scope="col">Correo</th>
+                                        <th scope="col">Categoria</th>
+                                        <th scope="col">Marca</th>
+                                        <th scope="col">Modelo</th>
+                                        <th scope="col">Serie</th>
+                                        <th scope="col">Aporte</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                            foreach ($subastas as $subasta) {
+                                                echo('<tr>');
+                                                echo('<td>'.$subasta['nombre_completo'].'</td>');
+                                                echo('<td>'.$subasta['correo'].'</td>');
+                                                echo('<td>'.$subasta['categoria'].'</td>');
+                                                echo('<td>'.$subasta['marca'].'</td>');
+                                                echo('<td>'.$subasta['modelo_equipo'].'</td>');
+                                                echo('<td>'.$subasta['serie'].'</td>');
+                                                echo('<td class="text-end"> $ '.number_format(floatval($subasta['costo']),2,'.',',').'</td>');
+                                                echo('</tr>');
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- Optional JavaScript; choose one of the two! -->
 

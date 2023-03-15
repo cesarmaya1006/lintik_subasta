@@ -12,4 +12,4 @@ $query ="UPDATE `productos` SET `estado`='0' WHERE `id_productos` = '".$_POST['i
 $result = mysqli_query($conexion,$query);
 
 
-header("location: ../login-register/bienvenida2.php?id_usuario=".$_POST['id']."&aporte=1");
+header("bienvenida2.php?id_usuario=".$_POST['id']."&aporte=1");

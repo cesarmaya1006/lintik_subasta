@@ -44,8 +44,8 @@
                     <form action="php/registro_usuario_be.php" method ="POST" class="formulario__register">
                         <h2>Regístrarse</h2>
                         <input type="text" placeholder="Nombre completo" name ="Nombre completo">
-                        <input type="text" placeholder="Correo Electronico" name = "Correo">
-                        <input type="text" placeholder="Usuario" name = "Usuario">
+                        <input type="text" placeholder="Correo Electronico" name = "Correo" id="Correo">
+                        <input type="text" placeholder="Usuario" name = "Usuario" id="Usuario" readonly>
                         <input type="password" placeholder="Contraseña" name= "Passw">
                         <button>Regístrarse</button>
                     </form>
@@ -56,6 +56,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
         <script src="assets/js/script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $( "#Correo" ).keyup(function(event) {
+                    $('#Usuario').val($(this).val());
+                });
+            });
+
+        </script>
         </div>
 </body>
 </html>
