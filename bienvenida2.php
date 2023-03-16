@@ -103,6 +103,7 @@ body{
     crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     <script src="https://kit.fontawesome.com/e00ad09966.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="./assets/css/bienvenida2.css">
     <title>Linktic</title>
   </head>
   <body>
@@ -185,7 +186,7 @@ body{
                                                         $fotos = $result->fetch_all(MYSQLI_ASSOC);
 
                                                         //===========================================================
-                                                        echo('<div id="carouselExampleSlidesOnly'.$equipo['id_productos'].'" class="carousel slide" data-bs-ride="carousel">');
+                                                        echo('<div id="carouselExampleSlidesOnly'.$equipo['id_productos'].'" class="carousel carousel-dark slide" data-bs-ride="carousel">');
                                                         echo('<div class="carousel-inner" id="carrusel_inner_'.$equipo['id_productos'].'">');
                                                         $cont =0;
                                                         if (count($fotos)>0) {
@@ -222,15 +223,21 @@ body{
                                                             echo('</div>');
                                                         }
                                                         echo('</div>');
-                                                        echo('<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">');
+                                                        echo('</div>');
+                                                        echo('</div>');
+                                                        echo('</div>');
+                                                        echo('<div class="row">');
+                                                        echo('<div class="col-6 text-left text-black">');
+                                                        echo('<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly'.$equipo['id_productos'].'" data-bs-slide="prev">');
                                                         echo('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
                                                         echo('<span class="visually-hidden">Previous</span>');
                                                         echo('</button>');
-                                                        echo('<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">');
+                                                        echo('</div>');
+                                                        echo('<div class="col-6 text-right">');
+                                                        echo('<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly'.$equipo['id_productos'].'" data-bs-slide="next">');
                                                         echo('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
                                                         echo('<span class="visually-hidden">Next</span>');
                                                         echo('</button>');
-                                                        echo('</div>');
                                                         echo('</div>');
                                                         echo('</div>');
                                                         echo('<div class="row">');
@@ -291,7 +298,7 @@ body{
                                                         $fotos = $result->fetch_all(MYSQLI_ASSOC);
 
                                                         //===========================================================
-                                                        echo('<div id="carouselExampleSlidesOnly'.$equipo['id_productos'].'" class="carousel slide" data-bs-ride="carousel">');
+                                                        echo('<div id="carouselExampleSlidesOnly'.$equipo['id_productos'].'" class="carousel carousel-dark slide" data-bs-ride="carousel">');
                                                         echo('<div class="carousel-inner" id="carrusel_inner_'.$equipo['id_productos'].'">');
                                                         $cont =0;
                                                         if (count($fotos)>0) {
@@ -328,15 +335,21 @@ body{
                                                             echo('</div>');
                                                         }
                                                         echo('</div>');
-                                                        echo('<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">');
+                                                        echo('</div>');
+                                                        echo('</div>');
+                                                        echo('</div>');
+                                                        echo('<div class="row">');
+                                                        echo('<div class="col-6 text-left text-black">');
+                                                        echo('<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly'.$equipo['id_productos'].'" data-bs-slide="prev">');
                                                         echo('<span class="carousel-control-prev-icon" aria-hidden="true"></span>');
                                                         echo('<span class="visually-hidden">Previous</span>');
                                                         echo('</button>');
-                                                        echo('<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">');
+                                                        echo('</div>');
+                                                        echo('<div class="col-6 text-right">');
+                                                        echo('<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly'.$equipo['id_productos'].'" data-bs-slide="next">');
                                                         echo('<span class="carousel-control-next-icon" aria-hidden="true"></span>');
                                                         echo('<span class="visually-hidden">Next</span>');
                                                         echo('</button>');
-                                                        echo('</div>');
                                                         echo('</div>');
                                                         echo('</div>');
                                                         echo('<div class="row">');
@@ -344,7 +357,7 @@ body{
                                                         echo('<span type="button" class="btn btn-primary" onclick="verModal('.$equipo['id_productos'].')"><i class="fas fa-search"></i></span>');
                                                         echo('</div>');
                                                         echo('</div>');
-                                                       echo('<div class="card-body">');
+                                                        echo('<div class="card-body">');
                                                         echo('<div class="row">');
                                                         echo('<div class="col-12 text-center">');
                                                         echo('<h5 class="card-title">Pc '.$contador2.'</h5>');
