@@ -3,16 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
 session_start();
-if ($_SESSION['pefil']!='admin') {
-    echo'
-    <script>
-    alert("usuario sin acceso ");
-    window.location = "index.php";
-    </script>
-    ';
-    exit;
-}
-
+if (isset($_SESSION['pefil'],$_SESSION['id'])) {
 $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 $url = substr($url,0,24);
 $_SESSION['url'] = $url;
@@ -189,7 +180,21 @@ if ($url =='localhost/login-register') {
                 $datos[]='sipi';
                 header('Content-type: text/json');
                 echo json_encode($datos, JSON_PRETTY_PRINT);
+            }elseif($metodo == 'eliminar_compra') {
+                $id_productos = $_GET['id_productos'];
+                $id = $_GET['id'];
+                //===============================================================
+                $query ="DELETE FROM `compras` WHERE `id_productos` = '". $id_productos."'  AND id='" . $id ."'";
+                $result = mysqli_query($conexion,$query);
+                $query="UPDATE `productos` SET `estado`= 1 WHERE `id_productos` = ". $id_productos;
+                $result = mysqli_query($conexion,$query);
+                $datos[]='eliminado';
+                //===============================================================
+                header('Content-type: text/json');
+                echo json_encode($datos, JSON_PRETTY_PRINT);
             }
         }
     }
+}
+
 ?>

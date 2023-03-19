@@ -5,21 +5,23 @@ if (isset($_SESSION['pefil'],$_SESSION['id'])) {
 }else{
     $ingresa =0;
 }
+if ($ingresa ==1) {
+    
+/*if ($ingresa==0) {
 
-if ($ingresa==0) {
     echo '
     <script>
     alert ("Usuario no Logeado");
     window.location ="index.php";
     </script>
     ';
-}
-
+}*/
+$id = $_SESSION['id'];
 include('./php/conexion_be.php');
 //===========================================================
 //Usuario
 //Trae las Usuario
-$query ='SELECT * FROM `usuarios` WHERE `id` = '. $_GET['id_usuario'];
+$query ='SELECT * FROM `usuarios` WHERE `id` = '. $_SESSION['id'];
 $result = mysqli_query($conexion,$query);
 $usuarios = $result->fetch_all(MYSQLI_ASSOC);
 foreach ($usuarios as $usuario_f) {
@@ -37,8 +39,18 @@ $categorias = $result->fetch_all(MYSQLI_ASSOC);
 $query ='SELECT * FROM `productos`';
 $result = mysqli_query($conexion,$query);
 $equipos = $result->fetch_all(MYSQLI_ASSOC);
+//===========================================================
+//Compras
+$query ="SELECT b.id_productos, c.categoria, b.marca ,b.modelo_equipo, b.serie, b.sist_op, b.ram, b.disco , b.costo, b.nota 
+FROM `compras` as a
+INNER JOIN productos AS b ON b.id_productos = a.id_productos
+INNER JOIN categorias AS c ON c.id_cat = b.id_cat
+WHERE a.id ='" . $id ."'" ;
+$result = mysqli_query($conexion,$query);
+$compras = $result->fetch_all(MYSQLI_ASSOC);
 
 
+} 
 
 ?>
 <style>
@@ -102,11 +114,30 @@ body{
     integrity="sha512-giQeaPns4lQTBMRpOOHsYnGw1tGVzbAIHUyHRgn7+6FmiEgGGjaG0T2LZJmAPMzRCl+Cug0ItQ2xDZpTmEc+CQ==" 
     crossorigin="anonymous" referrerpolicy="no-referrer" /> 
     <script src="https://kit.fontawesome.com/e00ad09966.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <link rel="stylesheet" href="./assets/librerias/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="./assets/librerias/select.bootstrap5.min.css">
+    <link rel="stylesheet" href="./assets/librerias/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/librerias/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="./assets/librerias/sweetalert2.min.css">
     <link rel="stylesheet" href="./assets/css/bienvenida2.css">
+    
     <title>Linktic</title>
   </head>
   <body>
+    <?php
+
+if (isset($_SESSION['aporte'])) {
+    echo('<input type="hidden" name="aporte" id="aporte" value="1">');
+    unset($_SESSION['aporte']);
+}else {
+    echo('<input type="hidden" name="aporte" id="aporte" value="0">');
+    unset($_SESSION['aporte']);
+}
+
+?>
+    <input type="hidden" name="ingresa" id="ingresa" value="<?php echo($ingresa);?>">
+    <?php if($ingresa ==1){ ?>
     <div>
         <div class="row" style="min-height: 100vh;">
             <div class="col-12" style="min-height: 100vh;background-color: rgba(0, 255, 255, 0);">
@@ -131,6 +162,13 @@ body{
                            background-repeat: no-repeat;
                            background-size: cover;
                            background-size: 600px;">
+                    <?php  if (count($compras)) {?>
+                    <div class="col-12 mt-2 mtb-2">
+                        <div class="row d-flex justify-content-end">
+                            <div class="col-1"><button type="button" class="btn btn-light text-warning" data-bs-toggle="modal" data-bs-target="#comprasModal" id="btn_comprasModal"><i class="fas fa-shopping-cart fa-2x"></i></button></div>
+                        </div>                    
+                    </div>
+                    <?php } ?>
                     <div class="col-12">
                         <div class="row d-flex justify-content-center" style="background-color: rgba(255,255,255,0.5); min-height:75vh">
                             <div class="col-12 col-md-10">
@@ -195,24 +233,24 @@ body{
                                                                 if ($cont==1) {
                                                                     echo('<div class="carousel-item active">');
                                                                     if ($equipo['estado']==0) {
-                                                                        echo('<div class="marca-de-agua"></div>');
+                                                                        echo('<div class="marca-de-agua marca_agua_'.$equipo['id_productos'].'"></div>');
                                                                     }
-                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="img-thumbnail');
+                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="foto_'.$equipo['id_productos'].' img-thumbnail');
                                                                     if ($equipo['estado']==0) {
                                                                         echo(' subastado');
                                                                     }
-                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;"  >');
+                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;">');
                                                                     echo('</div>');
                                                                 } else {
                                                                     echo('<div class="carousel-item">');
                                                                     if ($equipo['estado']==0) {
-                                                                    echo('<div class="marca-de-agua"></div>');
+                                                                        echo('<div class="marca-de-agua marca_agua_'.$equipo['id_productos'].'"></div>');
                                                                     }
-                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="img-thumbnail');
+                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="foto_'.$equipo['id_productos'].' img-thumbnail');
                                                                     if ($equipo['estado']==0) {
                                                                         echo(' subastado');
                                                                     }
-                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;"  >');
+                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;">');
                                                                     echo('</div>');
                                                                 }
                                                             }
@@ -264,7 +302,8 @@ body{
                                                         echo('<form action="compra.php" method ="POST">');
                                                         echo('<input type="hidden" name="id_productos" value="'.$equipo['id_productos'].'">  ');
                                                         echo('<input type="hidden" name="id" value="'.$usuario['id'].'">');
-                                                        echo('<div class="d-grid gap-2">');echo('<button type="submit" class="btn btn-primary" style="$cyan-500;box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);" ');
+                                                        echo('<div class="d-grid gap-2">');
+                                                        echo('<button type="submit" id="btn_'.$equipo['id_productos'].'" class="btn btn-primary" style="$cyan-500;box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);" ');
                                                         if ($equipo['estado']==0) {
                                                             echo(' disabled');
                                                         }
@@ -307,24 +346,24 @@ body{
                                                                 if ($cont==1) {
                                                                     echo('<div class="carousel-item active">');
                                                                     if ($equipo['estado']==0) {
-                                                                        echo('<div class="marca-de-agua"></div>');
+                                                                        echo('<div class="marca-de-agua marca_agua_'.$equipo['id_productos'].'"></div>');
                                                                     }
-                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="img-thumbnail');
+                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="foto_'.$equipo['id_productos'].' img-thumbnail');
                                                                     if ($equipo['estado']==0) {
                                                                         echo(' subastado');
                                                                     }
-                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;" >');
+                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;">');
                                                                     echo('</div>');
                                                                 } else {
                                                                     echo('<div class="carousel-item">');
                                                                     if ($equipo['estado']==0) {
-                                                                    echo('<div class="marca-de-agua"></div>');
+                                                                        echo('<div class="marca-de-agua marca_agua_'.$equipo['id_productos'].'"></div>');
                                                                     }
-                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="img-thumbnail');
+                                                                    echo('<img src="imagenes/'.$foto['url'].'" class="foto_'.$equipo['id_productos'].' img-thumbnail');
                                                                     if ($equipo['estado']==0) {
                                                                         echo(' subastado');
                                                                     }
-                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;" >');
+                                                                    echo('" alt="'.$equipo['modelo_equipo'].'" style="height:250px;width:auto;">');
                                                                     echo('</div>');
                                                                 }
                                                             }
@@ -376,7 +415,7 @@ body{
                                                         echo('<form action="compra.php" method ="POST">');
                                                         echo('<input type="hidden" name="id_productos" value="'.$equipo['id_productos'].'">  ');
                                                         echo('<input type="hidden" name="id" value="'.$usuario['id'].'">');
-                                                        echo('<div class="d-grid gap-2">');echo('<button type="submit" class="btn btn-primary" style="$cyan-500;box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);" ');
+                                                        echo('<div class="d-grid gap-2">');echo('<button type="submit" id="btn_'.$equipo['id_productos'].'" class="btn btn-primary" style="$cyan-500;box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);" ');
                                                         if ($equipo['estado']==0) {
                                                             echo(' disabled');
                                                         }
@@ -405,10 +444,6 @@ body{
         
     </div>
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -438,8 +473,66 @@ body{
   </div>
 </div>
 
+<!--- ****************************************************************************************** -->
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="comprasModal" tabindex="-1" aria-labelledby="comprasModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="comprasModalLabel">Mis Compras</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 table-responsive">
+                <table class="table table-striped table-hover table-bordered table-sm display" id="tabla-data">
+                    <thead>
+                        <tr>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Marca</th>
+                        <th scope="col">Modelo</th>
+                        <th scope="col">Serie</th>
+                        <th scope="col">Aporte</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach ($compras as $compras) {
+                                echo('<tr>');
+                                echo('<td>'.$compras['categoria'].'</td>');
+                                echo('<td>'.$compras['marca'].'</td>');
+                                echo('<td>'.$compras['modelo_equipo'].'</td>');
+                                echo('<td>'.$compras['serie'].'</td>');
+                                echo('<td class="text-end"> $ '.number_format(floatval($compras['costo']),2,'.',',').'</td>');
+                                echo('<td class="text-center" style="white-space:nowrap;">');
+                                echo('<form action="procesos.php" class="d-inline form-eliminar" method="GET">');
+                                echo('<input type="hidden" name="metodo" value="eliminar_compra">');
+                                echo('<input type="hidden" name="id_productos" value="'.$compras['id_productos'].'">');
+                                echo('<input type="hidden" name="id" value="'.$_SESSION['id'].'">');
+                                echo('<button type="submit" class="btn-accion-tabla eliminar tooltipsC" title="Eliminar este registro">');
+                                echo('<i class="fa fa-fw fa-trash text-danger"></i>');
+                                echo('</button>');
+                                echo('</form>');
+                                echo('</td>');
+                                echo('</tr>');
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+      </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+    </div>
+    </div>
+  </div>
+</div>
 
     <?php
+    }
 $url = $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
 $url = substr($url,0,24);
 $_SESSION['url'] = $url;
@@ -451,31 +544,25 @@ if ($url =='localhost/login-register') {
 
 ?>
 <input type="hidden" name="" id="url_data" value="<?php echo($urlRetorno); ?>">
-    <?php
-    
-if (isset($_GET['aporte'])) {
-    echo("
-    <script>
-    Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Su aporte fue registrado',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      </script>
-    ");
-    $_GET['aporte'] = 0;
-}
-    ?>
- 
 
-    
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="./assets/librerias/bootstrap.bundle.min.js"></script>
+    <script src="./assets/librerias/jquery-3.5.1.js"></script>
+    <script src="./assets/librerias/jquery.dataTables.min.js"></script>
+    <script src="./assets/librerias/dataTables.bootstrap5.min.js"></script>
+    <script src="./assets/librerias/dataTables.select.min.js"></script>
+    <script src="./assets/librerias/dataTables.buttons.min.js"></script>
+    <script src="./assets/librerias/jszip.min.js"></script>
+    <script src="./assets/librerias/pdfmake.min.js"></script>
+    <script src="./assets/librerias/vfs_fonts.js"></script>
+    <script src="./assets/librerias/buttons.html5.min.js"></script>
+    <script src="./assets/librerias/buttons.print.min.js"></script>
+    <script src="./assets/librerias/sweetalert2.all.min.js"></script>
+    <script src="assets/js/bienvenidos2.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
