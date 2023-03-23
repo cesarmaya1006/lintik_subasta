@@ -1,3 +1,55 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+session_start();
+if (isset($_SESSION['mensaje'])) {
+    $mensaje = $_SESSION['mensaje'];
+    if ($mensaje == 'El correo envio de manera correcta') {
+        $alert =
+            "
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '" .
+            $mensaje .
+            "',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    ";
+    } else {
+        $alert =
+            "
+    Swal.fire({
+        position: 'top-end',
+        icon: 'error',
+        title: '" .
+            $mensaje .
+            "',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    ";
+    }
+    $_SESSION['mensaje'] = $mensaje;
+}elseif(isset($_SESSION['mensaje_camb']))
+{
+    $mensaje_camb = $_SESSION['mensaje_camb'];
+    $alertmensaje_camb =
+            "
+    Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: '" .
+            $mensaje_camb .
+            "',
+        showConfirmButton: false,
+        timer: 1500
+      })
+    ";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +59,7 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="icon" type="image/jpg" href="./imagenes/logo.png"/>
@@ -63,7 +115,10 @@
                     $('#Usuario').val($(this).val());
                 });
             });
-
+            <?php 
+            if (isset($_SESSION['mensaje'])) {echo $alert;}
+            if (isset($_SESSION['mensaje_camb'])) {echo $alertmensaje_camb;}
+            ?>
         </script>
         </div>
 </body>
