@@ -1,0 +1,1 @@
+ALTER TABLE `usuarios` ADD `camb_password` INT NULL DEFAULT '0' AFTER `perfil`, ADD `remember_token` TEXT NULL AFTER `camb_password`;

@@ -13,7 +13,7 @@ include('./php/conexion_be.php');
 //===========================================================
 //Asignaciones
 //Trae las Usuario
-$query ="SELECT c.nombre_completo , c.correo ,d.categoria, b.marca,b.modelo_equipo,b.serie, b.costo FROM `compras` AS a
+$query ="SELECT c.nombre_completo , c.correo ,d.categoria, b.marca,b.procesador,b.modelo_equipo,b.serie, b.costo FROM `compras` AS a
 INNER JOIN productos AS b on a.`id_productos` = b.`id_productos`
 INNER JOIN usuarios AS c ON a.`id` = c.id
 INNER JOIN categorias AS d ON b.id_cat = d.id_cat;";
@@ -106,6 +106,7 @@ $subastas = $result->fetch_all(MYSQLI_ASSOC);
                                         <th scope="col">Categoria</th>
                                         <th scope="col">Marca</th>
                                         <th scope="col">Modelo</th>
+                                        <th scope="col">Procesador</th>
                                         <th scope="col">Serie</th>
                                         <th scope="col">Aporte</th>
                                         </tr>
@@ -119,6 +120,7 @@ $subastas = $result->fetch_all(MYSQLI_ASSOC);
                                                 echo('<td>'.$subasta['categoria'].'</td>');
                                                 echo('<td>'.$subasta['marca'].'</td>');
                                                 echo('<td>'.$subasta['modelo_equipo'].'</td>');
+                                                echo('<td>'.$subasta['procesador'].'</td>');
                                                 echo('<td>'.$subasta['serie'].'</td>');
                                                 echo('<td class="text-end"> $ '.number_format(floatval($subasta['costo']),2,'.',',').'</td>');
                                                 echo('</tr>');

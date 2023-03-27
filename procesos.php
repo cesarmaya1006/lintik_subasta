@@ -1,4 +1,7 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -57,7 +60,8 @@ if (isset($_SESSION['pefil'], $_SESSION['id'])) {
                  `costo`, 
                  `nota`, 
                  `url`, 
-                 `estado`) 
+                 `estado`, 
+                 `procesador`) 
                  VALUES (
                     '" .
                 $_POST['id_cat'] .
@@ -89,7 +93,10 @@ if (isset($_SESSION['pefil'], $_SESSION['id'])) {
                     '" .
                 $archivo .
                 "',
-                    1)";
+                    1,
+                    '" .
+                $_POST['procesador'] .
+                "')";
             $result = mysqli_query($conexion, $query);
             header(
                 'location: ' .
@@ -148,6 +155,9 @@ if (isset($_SESSION['pefil'], $_SESSION['id'])) {
                 "',
             `nota`='" .
                 $_POST['nota'] .
+                "',
+            `procesador`='" .
+                $_POST['procesador'] .
                 "'";
             if (isset($archivo) && $archivo != '') {
                 $query .= ",`url`='" . $archivo . "'";
@@ -358,23 +368,61 @@ if (isset($_SESSION['pefil'], $_SESSION['id'])) {
                 $query = "UPDATE `usuarios` SET `camb_password`='1',`remember_token`='" . $encriptado ."' WHERE id='" . $usuario['id'] . "'";
                 $result = mysqli_query($conexion, $query);
                 $to = $email;
-                $subject = "Restablecer contraseña";
-                $message = "Haga clic en el siguiente enlace para restablecer su contraseña: http://".$url."/reset_password.php?email=" . $email . "&token=" . $encriptado;
-                $headers = "From: linktic@linktic.com" . "\r\n" .
-                            "Reply-To: " . "\r\n" .
-                            "X-Mailer: PHP/" . phpversion();
-                if(mail($to, $subject, $message, $headers)){
+                $subject = "Restablecer contrase&ntilde;a";
+                $message2 = "Haga clic en el siguiente enlace para restablecer su contrase&ntilde;a: http://".$url."/reset_password.php?email=" . $email . "&token=" . $encriptado;
+                $message = '<div class="row"><div class="col-12"><p>Haga clic en el siguiente enlace para restablecer su contrase&ntilde;a: <a href="http://'.$url.'/reset_password.php?email=' . $email . '&token=' . $encriptado.'">Restablecer Contrase&ntilde;a</a></p></div></div>';
+                $headers = "From: linktic@linktic.com" . "\r\n" . "Reply-To: " . "\r\n" . "X-Mailer: PHP/" . phpversion();
+                //=========================================================================================================
+                require './PHPMailer/PHPMailer/PHPMailer.php';
+                require './PHPMailer/PHPMailer/SMTP.php';
+                //Crear una instancia de PHPMailer
+                $mail = new PHPMailer();
+                //Definir que vamos a usar SMTP
+                $mail->IsSMTP();
+                $mail->SMTPDebug  = 1;
+                //Ahora definimos gmail como servidor que aloja nuestro SMTP
+                $mail->Host       = 'smtp.gmail.com';
+                //El puerto será el 587 ya que usamos encriptación TLS
+                $mail->Port       = 587;
+                //Definmos la seguridad como TLS
+                $mail->SMTPSecure = 'tls';
+                //Tenemos que usar gmail autenticados, así que esto a TRUE
+                $mail->SMTPAuth   = true;
+                //Definimos la cuenta que vamos a usar. Dirección completa de la misma
+                $mail->Username   = "ayudame@linktic.com";
+                //Introducimos nuestra contraseña de gmail
+                $mail->Password   = "A5775%Sx";
+                //Definimos el remitente (dirección y, opcionalmente, nombre)
+                $mail->SetFrom('ayudame@linktic.com', 'LinkTic');
+                //Y, ahora sí, definimos el destinatario (dirección y, opcionalmente, nombre)
+                $mail->AddAddress($email, 'Usuario Linktic');
+                //Definimos el tema del email
+                $mail->Subject = 'Restablecer contraseña';
+                //Para enviar un correo formateado en HTML lo cargamos con la siguiente función. Si no, puedes meterle directamente una cadena de texto.
+                //$mail->MsgHTML($message);
+                $mail->MsgHTML($message);
+                //Y por si nos bloquean el contenido HTML (algunos correos lo hacen por seguridad) una versión alternativa en texto plano (también será válida para lectores de pantalla)
+                $mail->AltBody = $message2;
+                //Enviamos el correo
+                if(!$mail->Send()) {
+                    $mensaje= "No se pudo enviar el correo - Error: " . $mail->ErrorInfo;
+                } else {
+                    $mensaje ="El correo envio de manera correcta";
+                }
+                
+                //=========================================================================================================
+                /*if(mail($to, $subject, $message, $headers)){
                     $mensaje ="El correo envio de manera correcta";
                 }else{
                     $mensaje ="No se pudo enviar el correo";
-                }
+                }*/
             }else{
                 $mensaje ="El correo no se encuentra registrado en la base de datos";
             }
             $_SESSION['mensaje'] = $mensaje;
             header('location: ' . $urlRetorno);
         }elseif($accion =='new_password'){
-            $query = "UPDATE `usuarios` SET `camb_password`='0',`remember_token`='1',`Pass`='" . $_POST['password'] . "' WHERE correo='" . $_POST['email'] . "' AND remember_token='" . $_POST['token'] . "'";
+            $query = "UPDATE `usuarios` SET `camb_password`='0',`remember_token`='1',`Pass`='" . hash('sha512', $_POST['password']) . "' WHERE correo='" . $_POST['email'] . "' AND remember_token='" . $_POST['token'] . "'";
             $result = mysqli_query($conexion, $query);
             $mensaje_camb ="Se cambio la contraseña de manera correcta";
             $_SESSION['mensaje_camb'] = $mensaje;

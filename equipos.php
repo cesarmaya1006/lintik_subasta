@@ -113,6 +113,7 @@ $equipos = $result->fetch_all(MYSQLI_ASSOC);
                                                 <th class="text-center" style="white-space:nowrap;">Modelo</th>
                                                 <th class="text-center" style="white-space:nowrap;">Serie</th>
                                                 <th class="text-center" style="white-space:nowrap;">Sistema Operativo</th>
+                                                <th class="text-center" style="white-space:nowrap;">Procesador</th>
                                                 <th class="text-center" style="white-space:nowrap;">Ram</th>
                                                 <th class="text-center" style="white-space:nowrap;">Disco</th>
                                                 <th class="text-center" style="white-space:nowrap;">Costo</th>
@@ -130,6 +131,7 @@ $equipos = $result->fetch_all(MYSQLI_ASSOC);
                                                 echo('<td class="text-center" style="white-space:nowrap;">'.$equipo['modelo_equipo'].'</td>');
                                                 echo('<td class="text-center">'.$equipo['serie'].'</td>');
                                                 echo('<td class="text-center">'.$equipo['sist_op'].'</td>');
+                                                echo('<td class="text-center">'.$equipo['procesador'].'</td>');
                                                 echo('<td class="text-center">'.$equipo['ram'].'</td>');
                                                 echo('<td class="text-center">'.$equipo['disco'].'</td>');
                                                 echo('<td class="text-center" style="white-space:nowrap;"> $ '.number_format(floatval($equipo['costo']),2,'.',',').'</td>');

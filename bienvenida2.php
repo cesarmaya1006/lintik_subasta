@@ -41,7 +41,7 @@ $result = mysqli_query($conexion,$query);
 $equipos = $result->fetch_all(MYSQLI_ASSOC);
 //===========================================================
 //Compras
-$query ="SELECT b.id_productos, c.categoria, b.marca ,b.modelo_equipo, b.serie, b.sist_op, b.ram, b.disco , b.costo, b.nota 
+$query ="SELECT b.id_productos, c.categoria, b.marca ,b.modelo_equipo,b.procesador, b.serie, b.sist_op, b.ram, b.disco , b.costo, b.nota 
 FROM `compras` as a
 INNER JOIN productos AS b ON b.id_productos = a.id_productos
 INNER JOIN categorias AS c ON c.id_cat = b.id_cat
@@ -295,6 +295,7 @@ if (isset($_SESSION['aporte'])) {
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Serial : </strong></div><div class="col-8"><p>'.$equipo['serie'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Sistema Operativo : </strong></div><div class="col-7"><p>'.$equipo['sist_op'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Ram : </strong></div><div class="col-8"><p>'.$equipo['ram'].'</p></div></div>');
+                                                        echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Procesador : </strong></div><div class="col-8"><p>'.$equipo['procesador'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Disco duro : </strong></div><div class="col-8"><p>'.$equipo['disco'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>NOTA : </strong></div><div class="col-8" style="font-size:0.9em;"><p>'.$equipo['nota'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Contribución : </strong></div><div class="col-8"><p>$ '.number_format($equipo['costo'],2,'.',',').'</p></div></div>');
@@ -408,6 +409,7 @@ if (isset($_SESSION['aporte'])) {
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Serial : </strong></div><div class="col-8"><p>'.$equipo['serie'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Sistema Operativo : </strong></div><div class="col-7"><p>'.$equipo['sist_op'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Ram : </strong></div><div class="col-8"><p>'.$equipo['ram'].'</p></div></div>');
+                                                        echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Procesador : </strong></div><div class="col-8"><p>'.$equipo['procesador'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Disco duro : </strong></div><div class="col-8"><p>'.$equipo['disco'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>NOTA : </strong></div><div class="col-8" style="font-size:0.9em;"><p>'.$equipo['nota'].'</p></div></div>');
                                                         echo('<div class="row"><div class="col-4 text-end" style="font-size:0.85em;"><strong>Contribución : </strong></div><div class="col-8"><p>$ '.number_format($equipo['costo'],2,'.',',').'</p></div></div>');
@@ -492,6 +494,7 @@ if (isset($_SESSION['aporte'])) {
                         <th scope="col">Categoria</th>
                         <th scope="col">Marca</th>
                         <th scope="col">Modelo</th>
+                        <th scope="col">Procesador</th>
                         <th scope="col">Serie</th>
                         <th scope="col">Aporte</th>
                         <th></th>
@@ -504,6 +507,7 @@ if (isset($_SESSION['aporte'])) {
                                 echo('<td>'.$compras['categoria'].'</td>');
                                 echo('<td>'.$compras['marca'].'</td>');
                                 echo('<td>'.$compras['modelo_equipo'].'</td>');
+                                echo('<td>'.$compras['procesador'].'</td>');
                                 echo('<td>'.$compras['serie'].'</td>');
                                 echo('<td class="text-end"> $ '.number_format(floatval($compras['costo']),2,'.',',').'</td>');
                                 echo('<td class="text-center" style="white-space:nowrap;">');

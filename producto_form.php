@@ -44,6 +44,14 @@ $categorias = $result->fetch_all(MYSQLI_ASSOC);
         placeholder="Serie" required>
     </div>
     <div class="col-12 col-md-3 mb-5 form-group">
+        <label for="procesador">Procesador</label>
+        <input type="text" class="form-control form-control-sm" name="procesador" id="procesador" aria-describedby="helpId"
+        <?php if (isset($producto)) {
+            echo ' value="' . $producto['procesador'] . '"';
+        } ?>
+        placeholder="Procesador" required>
+    </div>
+    <div class="col-12 col-md-3 mb-5 form-group">
         <label for="sist_op">Sistema Operativo</label>
         <input type="text" class="form-control form-control-sm" name="sist_op" id="sist_op" aria-describedby="helpId"
         <?php if (isset($producto)) {
