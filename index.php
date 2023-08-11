@@ -98,6 +98,11 @@ if (isset($_SESSION['mensaje'])) {
                     </form>
                     <!--Register-->
                     <form action="php/registro_usuario_be.php" method ="POST" class="formulario_register d-none">
+                    <div class="alert alert-danger formulario_register" role="alert">
+                        <h3>Dona no se encuentra habilitada en el momento, este pendiente a las fechas de donación habilitadas por la compañía.</h3>
+                    </div>
+                    </form>
+                    <!--<form action="php/registro_usuario_be.php" method ="POST" class="formulario_register d-none">
                         <div class="row">
                             <div class="col-12 mt-5 mb-4"><h2>Registrarse</h2></div>
                             <div class="col-12 mt-3 mb-4 form-group">
@@ -114,7 +119,7 @@ if (isset($_SESSION['mensaje'])) {
                             </div>
                             <div class="col-12 mt-3 mb-4"><button class="btn btn-primary btn-xs pl-5 pr-5">   Regístrarse   </button></div>
                         </div>
-                    </form>
+                    </form>-->
                 </div>
             </div>
         </div>
